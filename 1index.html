@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة CodifyX</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-color: #00ffcc;
+            --text-color: #ffffff;
+            --text-muted: #94a3b8;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        p.subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+        }
+        .content-box {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: #0b0f19;
+            border-radius: 12px;
+            text-align: right;
+            border-right: 4px solid var(--accent-color);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .content-box h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #334155;
+            background: #131b2e;
+            color: #fff;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        .back-btn {
+            background: #1e293b;
+            color: var(--text-muted);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .back-btn:hover {
+            background: #334155;
+            color: #fff;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>CodifyX</h1>
+        <p class="subtitle">منصتك المبتكرة للحلول والخدمات البرمجية والإنجازية</p>
+
+        <!-- القائمة الرئيسية -->
+        <div class="btn-group" id="mainMenu">
+            <button class="btn" onclick="showSection('aboutSection')">من نحن وأعمالنا</button>
+            <button class="btn" onclick="showSection('profitsSection')">استعلام عن الأرباح</button>
+            <a href="mailto:Codifyx530@gmail.com?subject=استفسار أو طلب من منصة CodifyX" class="btn">تواصل معنا</a>
+        </div>
+
+        <!-- قسم من نحن -->
+        <div id="aboutSection" class="content-box" style="text-align: right;">
+            <h3>من نحن؟</h3>
+            <p>منصة <strong>CodifyX</strong> هي بيئة تقنية متكاملة ترتكز على العمل الإنجازي المعطاء. نقدم فرصاً مرنة ومتنوعة تشمل المعلمين البرمجيين، قيادة فرق التسويق، والخدمات البرمجية المبتكرة.</p>
+            <h3>أبرز أعمالنا:</h3>
+            <ul>
+                <li>تطوير وبناء الواجهات والحلول البرمجية.</li>
+                <li>تقديم الإرشاد والتعليم البرمجي للمبتدئين.</li>
+                <li>إدارة وتنفيذ الحملات التسويقية الفعالة.</li>
+            </ul>
+            <div style="text-align: center;">
+                <button class="back-btn" onclick="hideSections()">العودة للقائمة الرئيسية</button>
+            </div>
+        </div>
+
+        <!-- قسم استعلام الأرباح -->
+        <div id="profitsSection" class="content-box" style="text-align: center;">
+            <h3>استعلام عن الأرباح</h3>
+            <input type="text" id="code" placeholder="أدخل الكود الخاص بك"><br>
+            <button class="btn" style="width: 95%; margin-top: 10px; padding: 10px;" onclick="checkBalance()">عرض رصيدي</button>
+            <div id="result"></div>
+            <button class="back-btn" onclick="hideSections()">العودة للقائمة الرئيسية</button>
+        </div>
+    </div>
+
+    <script>
+        // === قاعدة البيانات اليدوية ===
+        // تم إزالة الرمز السري والاعتماد على الكود والاسم والرصيد فقط
+        const teamData = [
+            { id: "CFX_44310", name: "زهراء", balance: "$0" },
+            { id: "CFX_32779", name: "شمس", balance: "$0" },
+            { id: "CFX_69965", name: "مروان", balance: "$0" },
+            { id: "CFX_54339", name: "ايمان", balance: "$0" },
+            { id: "CFX_22331", name: "بيان", balance: "$0" },
+            { id: "CFX_39970", name: "بنين", balance: "$0" },
+            { id: "CFX_90543", name: "هيام", balance: "$0" },
+            // لإضافة شخص جديد، استخدم الصيغة التالية:
+            // { id: "CFX_xxxx", name: "اسم العضو", balance: "$0" },
+        ];
+
+        function showSection(sectionId) {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('aboutSection').style.display = 'none';
+            document.getElementById('profitsSection').style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function hideSections() {
+            document.getElementById('aboutSection').style.display = 'none';
+            document.getElementById('profitsSection').style.display = 'none';
+            document.getElementById('mainMenu').style.display = 'flex';
+            document.getElementById('code').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function checkBalance() {
+            const inputCode = document.getElementById('code').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (!inputCode) {
+                resultDiv.style.color = "#ff5555";
+                resultDiv.innerText = "الرجاء إدخال الكود الخاص بك!";
+                return;
+            }
+
+            // البحث عن العضو بواسطة الكود فقط
+            const member = teamData.find(m => m.id === inputCode);
+
+            if (member) {
+                resultDiv.style.color = "#00ffcc";
+                resultDiv.innerHTML = `مرحباً، ${member.name}<br>رصيدك الحالي: <span style="color: #ffffff;">${member.balance}</span>`;
+            } else {
+                resultDiv.style.color = "#ff5555";
+                resultDiv.innerText = "الكود المدخل غير صحيح!";
+            }
+        }
+    </script>
+</body>
+</html>
